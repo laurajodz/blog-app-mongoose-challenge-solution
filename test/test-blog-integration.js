@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const should = chai.should();
 
-const {Post} = require('../models');
+const { BlogPost } = require('../models');
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 
@@ -27,7 +27,7 @@ function seedPostData() {
       content: faker.lorem.paragraph()
     });
   }
-  return Post.insertMany(seedData);
+  return BlogPost.insertMany(seedData);
 }
 
 
@@ -75,7 +75,7 @@ describe('Blog Posts API resource', function() {
           res.should.have.status(200);
           // otherwise our db seeding didn't work
           res.body.should.have.length.of.at.least(1);
-          return Post.count();
+          return BlogPost.count();
         })
         .then(function(count) {
           res.body.should.have.length.of(count);
@@ -100,11 +100,11 @@ describe('Blog Posts API resource', function() {
               'id', 'title', 'author', 'content', 'created');
           });
           resPost = res.body[0];
-          return Post.findById(resPost.id);
+          return BlogPost.findById(resPost.id);
         })
         .then(function(post) {
           resPost.title.should.equal(post.title);
-          resPost.author.should.equal(post.author);
+          resPost.author.should.equal(post.authorName);
           resPost.content.should.equal(post.content);
         });
     });
@@ -140,7 +140,7 @@ describe('Blog Posts API resource', function() {
           res.body.author.should.equal(
             `${newPost.author.firstName} ${newPost.author.lastName}`);
           res.body.content.should.equal(newPost.content);
-          return Post.findById(res.body.id);
+          return BlogPost.findById(res.body.id);
         })
         .then(function(post) {
           post.title.should.equal(newPost.title);
@@ -165,7 +165,7 @@ describe('Blog Posts API resource', function() {
           lastName: 'Jodz'
         }
       };
-      return Post
+      return BlogPost
         .findOne()
         .then(function(post) {
           updateData.id = post.id;
@@ -177,7 +177,7 @@ describe('Blog Posts API resource', function() {
         })
         .then(function(res) {
           res.should.have.status(204);
-          return Post.findById(updateData.id);
+          return BlogPost.findById(updateData.id);
         })
         .then(function(post) {
           post.title.should.equal(updateData.title);
@@ -195,17 +195,17 @@ describe('Blog Posts API resource', function() {
     //  4. prove that restaurant with the id doesn't exist in db anymore
     it('delete a post by id', function() {
 
-      let blogPost;
+      let post;
 
-      return Post
+      return BlogPost
         .findOne()
         .then(function(_post) {
-          blogPost = _post;
+          post = _post;
           return chai.request(app).delete(`/posts/${post.id}`);
         })
         .then(function(res) {
           res.should.have.status(204);
-          return Post.findById(post.id);
+          return BlogPost.findById(post.id);
         })
         .then(function(_post) {
           // when a variable's value is null, chaining `should`
