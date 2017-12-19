@@ -2,3 +2,10 @@ language: node_js
 node_js: node
 services:
 - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: CXQq30zpAGUuVrII+EdIijdASlgrARHhAV3Y1T4S5DOjiKGX+HnU0UNcUJWqO591ORd/E7JIc/2v+4hAxfquS6P67+SfmKTTWRmMYo5bFF2W2QJQN1BqPYtz6vFfktcSPwoqkJLGPOtTSCVasUj/xfZsGPRkzbu/uozGh38zwaA9p+/W/v21zeD/qZpPhiDC1YmOKbKlkUMdT3wgTZZWCYIioF7GwICFDUvlTVKaKoqDcwpFuYB/mAjGjVFvO++xvNe9C+YqQfmK2YGnOFW4J6lSiWIpTGW9aZpIm/ekM93mx9PLMTHEv7cEzmNBZXiQ99JGGJ+nkdboj8z4xd77t6ViSuOXUuoJ3V+9ghouso3ijPW/b6j1ts4qi1ee4gTlp3Wyckndbm1W/mtd9WR1XkMYYRKw2a/+LuppUIra3gsgYBrlH8qVwCmIxjIcc7+2RcWGZpg+Qc2/cYvOf6draJdyKUeZFMfOi6hxkumqG/cWwF/iUsDiaokrOrCaniECuHd2ighC76aRISSYgT93IWhr+kawOE95dqPNZ1RdIe2C6pIvaXAZ3qPaOciSqtAhZEQvkGmuUlu2vHa9fS9laA3FC6l29CpW3bqI589xHgdlICizkBrhD+pRqbianFZp7/xPQsu/+pjvkuNBpWY/Ai/n9QteXXhNZl+6yIKfcNc=
+  app: shrouded-dusk-42510
+  on:
+    repo: laurajodz/blog-app-mongoose-challenge-solution
